@@ -1,0 +1,48 @@
+{
+    "name": "Ejudge Lksh +",
+    "description": "Makes ejudge.lksh.ru better.",
+    "version": "1.2",
+    "manifest_version": 3,
+    "author": "314tonick",
+    "icons": {
+        "16": "icons/16.png",
+        "32": "icons/32.png"
+    },
+    "action": {
+        "default_title": "Ejudge Lksh +",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "service.js"
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "tabs",
+        "clipboardRead",
+        "clipboardWrite",
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://ejudge.lksh.ru/*/standings/stand*.php"
+            ],
+            "js": ["standings.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://ejudge.lksh.ru/*"
+            ],
+            "js": ["main_page.js"],
+            "css": ["main_page.css"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [{
+    "resources": ["icons/*.png"],
+    "matches": ["<all_urls>"]
+    }]
+}

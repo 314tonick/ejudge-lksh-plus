@@ -1,0 +1,39 @@
+body {
+    background: #333;
+    color: #eee;
+    font-family: garamond;
+}
+
+.lessons__lesson:first-child a[href] {
+    color: #6f6 !important;
+    border-bottom-color: #393 !important;
+}
+
+.lessons__lesson a[href] {
+    color: #77f !important;
+    border-bottom-color: #55a !important;
+}
+
+.statements {
+    font-weight: bolder !important
+}
+
+.info a[href] {
+    color: #7af !important;
+}
+
+.parallel-name {
+    color: #dd3 !important;
+    border-bottom-color: #aa2 !important;
+}
+
+.current-parallel-name {
+    color: #eee !important;
+    /* background: ; */
+}
+
+.standings-link {
+    color: #ee4 !important;
+    font-weight: bolder !important;
+    float: right !important;
+}
