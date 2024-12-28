@@ -19,7 +19,7 @@ body {
 }
 
 .info a[href] {
-    color: #7af !important;
+    color: #7a7 !important;
 }
 
 .parallel-name {
@@ -36,4 +36,20 @@ body {
     color: #ee4 !important;
     font-weight: bolder !important;
     float: right !important;
+}
+
+/* .links a[href] {
+    color: #3f3 !important;
+} */
+
+.main-menu a[href] {
+    color: #eee !important;
+}
+
+.important {
+    color: #fff !important;
+}
+
+.schelude__item {
+    color: #777 !important;
 }
