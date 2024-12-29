@@ -136,7 +136,7 @@ td:hover > .parenthover {
         for (var i = 2; i < tbl.childElementCount; ++i) {
             var penNd2 = document.createElement("td");
             penNd2.classList.add("attempts");
-            penNd2.textContent = "-1";
+            penNd2.textContent = "-228";
             tbl.children[i].insertBefore(penNd2, tbl.children[i].children[solind + 1]);
         }
         penind = solind + 1;
@@ -171,13 +171,27 @@ td:hover > .parenthover {
         contest_num--;
     }
     var items = new Array();
+    var new_nd = document.createElement("td");
+    new_nd.rowSpan = ADD_GD_FACES ? 4 : 3;
+    new_nd.title = "PR + RJ";
+    new_nd.classList.add("solved_header");
+    new_nd.classList.add("half_solved_header");
+    new_nd.textContent = "pr";
+    tbl.children[0].insertBefore(new_nd, tbl.children[0].children[solind + 1]);
+    // penind++;
+
+    console.log("SolInd:", solind);
+    console.log("PenInd:", penind);    
     for (var i = 2; i < tbl.childElementCount; ++i) {
-        var all_solved = 0, all_penalty = 0;
+        var all_solved = 0, all_penalty = 0, pr_num = 0;
         var row = tbl.children[i];
         for (var j = notprob; j < row.childElementCount; ++j) {
             var element = row.children[j];
             element.style.maxWidth = "25px";
             var verd = element.classList[1];
+            if (verd == "PR" || verd == "RJ") {
+                pr_num++;
+            }
             if (styles[verd] != undefined) {
                 for (key in styles[verd]) {
                     element.style[key] = styles[verd][key];
@@ -221,7 +235,9 @@ td:hover > .parenthover {
                     element.title = task_strings[j - notprob] + ": PR, " + num_att + " wrong att.";
                 } else {
                     element.title = task_strings[j - notprob] + ": " + verd + ", " + num_att + "att.";
-                    num_att--;
+                    if (verd == "RJ") {
+                        num_att--;
+                    }
                 }
             }
             if (okVerdicts.indexOf(verd) != -1) {
@@ -232,21 +248,16 @@ td:hover > .parenthover {
             // makeGoodTitle(element);
         }
         var new_nd = document.createElement("td");
-        new_nd.textContent = all_solved - row.children[solind].textContent;
-        row.insertBefore(new_nd, row.children[penind + 1]);
+        new_nd.textContent = pr_num;
+        row.insertBefore(new_nd, row.children[penind]);
         items.push([-all_solved, all_penalty, row.children[1].textContent, i - 2]);
         if (SORT_BY_ALL_OK) {
             row.children[solind].textContent = all_solved;
-            row.children[penind].textContent = all_penalty;
+            row.children[penind + 1].textContent = all_penalty;
         }
         row.children[notprob].style["border-right-width"] = "5px";
     }
-    var new_nd = document.createElement("td");
-    new_nd.rowSpan = ADD_GD_FACES ? 4 : 3;
-    new_nd.title = "PR + RJ";
-    new_nd.classList.add("solved_header");
-    new_nd.textContent = "pr";
-    tbl.children[0].insertBefore(new_nd, tbl.children[0].children[solind + 1]);
+    // penind++;
     tbl.children[0].children[notprob].style["border-right-width"] = "5px";
     for (var j = 0; j < notprob + 1; ++j) {
         tbl.children[0].children[j].style["border-bottom-width"] = "5px";

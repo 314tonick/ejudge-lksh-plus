@@ -50,6 +50,17 @@ function makeEjudgePageBetter() {
             elem.style["color"] = "#8f8";
         }
     }
+    for (elem of document.getElementsByTagName("code")) {
+        var isACode = false;
+        for (cls of elem.classList) {
+            if (cls.startsWith("language-")) {
+                isACode = true;
+            }
+        }
+        if (isACode) {
+            elem.style["color"] = "#eee";
+        }
+    }
 }
 
 makeEjudgePageBetter()
