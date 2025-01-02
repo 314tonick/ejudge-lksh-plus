@@ -1,7 +1,7 @@
 {
     "name": "Ejudge Lksh +",
     "description": "Makes ejudge.lksh.ru better.",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "manifest_version": 3,
     "author": "314tonick",
     "icons": {
@@ -37,7 +37,6 @@
                 "https://ejudge.lksh.ru/*"
             ],
             "js": ["main_page.js"],
-            "css": ["main_page.css"],
             "run_at": "document_end"
         },
         {
@@ -45,7 +44,6 @@
                 "https://ejudge.lksh.ru/cgi-bin/new-client*"
             ],
             "js": ["ejudge_page.js"],
-            "css": ["ejudge_page.css"],
             "run_at": "document_end"
         }
     ],

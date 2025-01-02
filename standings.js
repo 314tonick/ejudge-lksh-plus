@@ -6,8 +6,10 @@ async function makeStandingsBetter() {
     }
     var SORT_BY_ALL_OK = storedData.pr_is_ok;
     var ADD_GD_FACES = storedData.fire_in_the_hole;
+    var DEFAULT_COLORS = storedData.default_colors;
     console.log(SORT_BY_ALL_OK);
     console.log(ADD_GD_FACES);
+    console.log(DEFAULT_COLORS);
 
     function compareTuples(a, b) {
         // Sizes are the same.
@@ -44,10 +46,12 @@ async function makeStandingsBetter() {
     }
     // document.body.append
     document.body.classList.add = "modifiedByEjudgeStandings+";
-    document.body.style.background = "#444";
+    if (!DEFAULT_COLORS) {
+        document.body.style.background = "#444";
+    }
     document.body.style.fontSize = "16px";
-    var style_nd = document.createElement("style");
-    style_nd.textContent = `
+    var style_nd_phover = document.createElement("style");
+    style_nd_phover.textContent = `
 .parenthover {
     z-index: 1;
     display: none;
@@ -65,7 +69,10 @@ td:has(.parenthover) {
 }
 td:hover > .parenthover {
     display: block
-}
+}`;
+
+    var style_nd = document.createElement("style");
+    style_nd.textContent = `
 .exam_5 {
     background: #492 !important;
     color: black !important
@@ -82,9 +89,12 @@ td:hover > .parenthover {
     background: #843 !important;
     color: black !important
 }
-
 `;
-    document.head.appendChild(style_nd);
+
+    if (!DEFAULT_COLORS) {
+        document.head.appendChild(style_nd);
+    }
+    document.head.append(style_nd_phover);
     for (elem of document.getElementsByClassName("fixed-users")) {
         elem.remove();
     }
@@ -95,8 +105,10 @@ td:hover > .parenthover {
         tbl = tbl[0];
     }
     tbl.classList.add("modifiedByEjudgeStandings+");
-    tbl.style.color = "#fff";
-    tbl.style.background = "#444";
+    if (!DEFAULT_COLORS) {
+        tbl.style.color = "#fff";
+        tbl.style.background = "#444";
+    }
     var styles = {
         "NO": {"background": "#444", "color": "#444"},
         "OK": {"background": "#251", "color": "#111"},
@@ -193,8 +205,10 @@ td:hover > .parenthover {
                 pr_num++;
             }
             if (styles[verd] != undefined) {
-                for (key in styles[verd]) {
-                    element.style[key] = styles[verd][key];
+                if (!DEFAULT_COLORS) {
+                    for (key in styles[verd]) {
+                        element.style[key] = styles[verd][key];
+                    }
                 }
                 if (j + 1 != row.childElementCount && task_strings_contest[j - notprob] != task_strings_contest[j - notprob + 1]) {
                     row.children[j].style["border-right-width"] = "5px";
@@ -369,8 +383,10 @@ td:hover > .parenthover {
         }
     }
     for (tbl2 of document.getElementsByClassName("subm_list")) {
-        tbl2.style.color = "#fff";
-        tbl2.style.background = "#444";
+        if (!DEFAULT_COLORS) {
+            tbl2.style.color = "#fff";
+            tbl2.style.background = "#444";
+        }
         tbl2 = tbl2.children[0];
         for (row of tbl2.children) {
             if (row.childElementCount < 4) {
@@ -379,8 +395,10 @@ td:hover > .parenthover {
             var element = row.children[3];
             var verd = element.classList[1];
             if (styles[verd] != undefined) {
-                for (key in styles[verd]) {
-                    element.style[key] = styles[verd][key];
+                if (!DEFAULT_COLORS) {
+                    for (key in styles[verd]) {
+                        element.style[key] = styles[verd][key];
+                    }
                 }
             }
             var i = names.indexOf(row.children[2].textContent);

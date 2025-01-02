@@ -2,6 +2,7 @@
 const FIELDS = {
     pr_is_ok: false,
     fire_in_the_hole: false,
+    default_colors: false
 };
 
 chrome.runtime.onMessage.addListener(
