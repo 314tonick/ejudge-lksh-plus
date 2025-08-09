@@ -191,9 +191,8 @@ td:hover > .parenthover {
     new_nd.textContent = "pr";
     tbl.children[0].insertBefore(new_nd, tbl.children[0].children[solind + 1]);
     // penind++;
-
     console.log("SolInd:", solind);
-    console.log("PenInd:", penind);    
+    console.log("PenInd:", penind);   
     for (var i = 2; i < tbl.childElementCount; ++i) {
         var all_solved = 0, all_penalty = 0, pr_num = 0;
         var row = tbl.children[i];

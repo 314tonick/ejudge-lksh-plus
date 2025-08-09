@@ -1,7 +1,7 @@
 {
     "name": "Ejudge Lksh +",
     "description": "Makes ejudge.lksh.ru better.",
-    "version": "1.3.2",
+    "version": "1.4",
     "manifest_version": 3,
     "author": "314tonick",
     "icons": {
@@ -27,7 +27,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://ejudge.lksh.ru/*/standings/stand*.php"
+                "https://ejudge.lksh.ru/*/standings/stand*.php*"
             ],
             "js": ["standings.js"],
             "run_at": "document_end"

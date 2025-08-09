@@ -2,7 +2,9 @@
 const FIELDS = {
     pr_is_ok: false,
     fire_in_the_hole: false,
-    default_colors: false
+    default_colors: false,
+    autorefresh: true,
+    autorefresh_time: 200
 };
 
 chrome.runtime.onMessage.addListener(
