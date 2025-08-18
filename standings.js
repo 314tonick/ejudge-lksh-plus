@@ -7,6 +7,7 @@ async function makeStandingsBetter() {
     var SORT_BY_ALL_OK = storedData.pr_is_ok;
     var ADD_GD_FACES = storedData.fire_in_the_hole;
     var DEFAULT_COLORS = storedData.default_colors;
+    var SHOW_CHEATERS = storedData.show_cheaters;
     console.log(SORT_BY_ALL_OK);
     console.log(ADD_GD_FACES);
     console.log(DEFAULT_COLORS);
@@ -154,8 +155,6 @@ td:hover > .parenthover {
         penind = solind + 1;
         notprob++;
     }
-    console.log("Penind = " + penind);
-    console.log(solind);
     var num_solved = new Array(tbl.children[1].childElementCount);
     num_solved.fill(0);
     var task_strings = new Array();
@@ -402,10 +401,31 @@ td:hover > .parenthover {
             }
             var i = names.indexOf(row.children[2].textContent);
             var j = task_strings_long.indexOf(row.children[1].textContent);
-            var node = tbl.children[i + 3 + ADD_GD_FACES].children[j + notprob + 1];
-            node.title = node.title + "\n[" + row.children[3].classList[1] + "] - " + row.children[0].textContent;
+            if (i != -1 && j != -1) {
+                var node = tbl.children[i + 3 + ADD_GD_FACES].children[j + notprob + 1];
+                node.title = node.title + "\n[" + row.children[3].classList[1] + "] - " + row.children[0].textContent;
+            } else {
+                console.log("Extension bugged on ", node);
+            }
         }
     }
+    console.log(SHOW_CHEATERS);
+    if (!SHOW_CHEATERS) {
+        for (var i = 3 + ADD_GD_FACES; i < tbl.childElementCount; ++i) {
+            if (tbl.children[i].children[1].textContent.search("Марченко") != -1) {
+                var nd = tbl.children[i].children[1];
+                nd.textContent = nd.textContent.replace(/Марченко .*$/, "<cheater name was hidden>");
+                tbl.children[i].children[2].textContent = "-∞";
+                var nnd = tbl.children[i];
+                nnd.remove();
+                tbl.appendChild(nnd);
+            }
+        }
+        for (var i = 3 + ADD_GD_FACES; i < tbl.childElementCount; ++i) {
+            tbl.children[i].children[0].textContent = i - (3 + ADD_GD_FACES) + 1;
+        }
+    }
+
     for (element of document.getElementsByTagName("td")) {
         makeGoodTitle(element);
     }

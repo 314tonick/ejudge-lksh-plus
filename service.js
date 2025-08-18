@@ -4,7 +4,8 @@ const FIELDS = {
     fire_in_the_hole: false,
     default_colors: false,
     autorefresh: true,
-    autorefresh_time: 200
+    autorefresh_time: 200,
+    show_cheaters: false
 };
 
 chrome.runtime.onMessage.addListener(
