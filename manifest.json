@@ -1,7 +1,7 @@
 {
     "name": "Ejudge Lksh +",
-    "description": "Makes ejudge.lksh.ru better.",
-    "version": "1.4",
+    "description": "Makes ejudge.lksh.ru better. Now improves inf-open.ru/ej/* as well.",
+    "version": "1.4.2",
     "manifest_version": 3,
     "author": "314tonick",
     "icons": {
@@ -41,7 +41,9 @@
         },
         {
             "matches": [
-                "https://ejudge.lksh.ru/cgi-bin/new-client*"
+                "https://ejudge.lksh.ru/cgi-bin/new-client*",
+                "https://ejudge-f.d.lksh.ru/*",
+                "https://inf-open.ru/ej/*"
             ],
             "js": ["ejudge_page.js"],
             "run_at": "document_end"

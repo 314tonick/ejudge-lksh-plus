@@ -86,7 +86,16 @@ code[class*="language-"] {
     /* background: #3a3 !important; */
     /* color: "#fff" !important; */
     text-shadow: none !important;
-}`;
+}
+
+#ej-main-submit-tab, #ej-user-submit-tab, #ej-submit-tabs, form, ul[class*="ui-tabs-nav"] {
+    background: #333 !important;
+}
+
+li[class*="ui-tabs-tab"] {
+    background: #222 !important;
+}
+`;
     if (!DEFAULT_COLORS) {
         document.head.appendChild(style_nd);
         document.body.style["background"] = "#222";
@@ -99,6 +108,12 @@ code[class*="language-"] {
                 elem.style["color"] = "#77e";
                 elem.style["text-shadow"] = "0px 1px 0px #339";
             }
+            if (elem.tagName == "TD") {
+                elem.style["color"] = "#fff";
+            }
+        }
+        for (elem of document.getElementsByClassName("b0")) {
+            elem.style["color"] = "#fff";
         }
         for (elem of document.getElementsByTagName("textarea")) {
             elem.style["background"] = "#222";
