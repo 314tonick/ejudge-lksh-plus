@@ -39,68 +39,9 @@ async function makeEjudgePageBetter() {
     var AUTOREFRESH_TIME = storedData.autorefresh_time;
     console.log("Ejudge!");
     
-    var style_nd = document.createElement("style");
-    style_nd.textContent = `
-.nProbEmpty {
-    background: #224 !important;
-}
-.nProbEmpty a[href] {
-    color: #fff !important;
-}
-
-.nProbCurrent {
-    background: #66f !important;
-}
-.nProbCurrent a[href] {
-    background: #66f !important;
-    color: #fff !important;
-}
-
-.nProbOk {
-    background: #3a3 !important;
-}
-.nProbOk a[href] {
-    color: #fff !important;
-}
-
-.nProbBad {
-    background: #a33 !important;
-}
-.nProbBad a[href] {
-    color: #fff !important;
-}
-
-.nProbTrans {
-    background: #883 !important;
-}
-.nProbTrans a[href] {
-    color: #fff !important;
-}
-
-.line-numbers {
-    color: "#fff" !important;
-    background: #000 !important;
-}
-
-code[class*="language-"] {
-    /* background: #3a3 !important; */
-    /* color: "#fff" !important; */
-    text-shadow: none !important;
-}
-
-#ej-main-submit-tab, #ej-user-submit-tab, #ej-submit-tabs, form, ul[class*="ui-tabs-nav"] {
-    background: #333 !important;
-}
-
-li[class*="ui-tabs-tab"] {
-    background: #222 !important;
-}
-`;
     if (!DEFAULT_COLORS) {
-        document.head.appendChild(style_nd);
-        document.body.style["background"] = "#222";
-        document.body.style["color"] = "#fff";
         document.getElementById("container").style["background"] = "#333";
+        document.getElementById("container").style["box-shadow"] = "none";
         document.getElementById("l12-col").style["background"] = "#333";
         for (elem of document.getElementsByClassName("b1")) {
             elem.style["background"] = "#333";
@@ -113,10 +54,6 @@ li[class*="ui-tabs-tab"] {
             }
         }
         for (elem of document.getElementsByClassName("b0")) {
-            elem.style["color"] = "#fff";
-        }
-        for (elem of document.getElementsByTagName("textarea")) {
-            elem.style["background"] = "#222";
             elem.style["color"] = "#fff";
         }
     }

@@ -1,0 +1,64 @@
+html, body, #l11, #l13, #l12-col, .l14 {
+  background: #222 !important;
+  color: #e0e0e0 !important;
+}
+
+.nProbEmpty {
+    background: #224 !important;
+}
+.nProbEmpty a[href] {
+    color: #fff !important;
+}
+
+.nProbCurrent {
+    background: #66f !important;
+}
+.nProbCurrent a[href] {
+    background: #66f !important;
+    color: #fff !important;
+}
+
+.nProbOk {
+    background: #3a3 !important;
+}
+.nProbOk a[href] {
+    color: #fff !important;
+}
+
+.nProbBad {
+    background: #a33 !important;
+}
+.nProbBad a[href] {
+    color: #fff !important;
+}
+
+.nProbTrans {
+    background: #883 !important;
+}
+.nProbTrans a[href] {
+    color: #fff !important;
+}
+
+.line-numbers {
+    color: "#fff" !important;
+    background: #000 !important;
+}
+
+code[class*="language-"] {
+    /* background: #3a3 !important; */
+    /* color: "#fff" !important; */
+    text-shadow: none !important;
+}
+
+#ej-main-submit-tab, #ej-user-submit-tab, #ej-submit-tabs, form, ul[class*="ui-tabs-nav"] {
+    background: #222 !important;
+}
+
+li[class*="ui-tabs-tab"] {
+    background: #111 !important;
+}
+
+textarea[name="text_form"] {
+    background: #111 !important;
+    color: #fff !important
+}

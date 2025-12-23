@@ -22,7 +22,8 @@
         "tabs",
         "clipboardRead",
         "clipboardWrite",
-        "storage"
+        "storage",
+        "webNavigation"
     ],
     "content_scripts": [
         {
@@ -48,6 +49,11 @@
             "js": ["ejudge_page.js"],
             "run_at": "document_end"
         }
+    ],
+    "host_permissions": [
+        "https://ejudge.lksh.ru/*",
+        "https://ejudge-f.d.lksh.ru/*",
+        "https://inf-open.ru/ej/*"
     ],
     "web_accessible_resources": [{
     "resources": ["icons/*.png"],

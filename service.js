@@ -32,3 +32,25 @@ chrome.runtime.onMessage.addListener(
         }
     },
 );
+
+const ALLOWED_URLS = /http(s?):\/\/((ejudge\.lksh\.ru)|(ejudge-f\.d\.lksh\.ru)|(inf-open\.ru\/ej))\/.*/;
+
+chrome.webNavigation.onCommitted.addListener(async (details) => {
+  
+    if (details.frameId !== 0) return;
+
+    console.log(details.url);
+
+    if (!ALLOWED_URLS.test(details.url)) {
+        return;
+    }
+    
+    const DEFAULT_COLORS = (await chrome.storage.local.get(FIELDS))["default_colors"];
+    if (DEFAULT_COLORS) return;
+
+    chrome.scripting.insertCSS({
+        target: { tabId: details.tabId },
+        files: ["dark.css"]
+    });
+});
+
