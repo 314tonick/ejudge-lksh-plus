@@ -1,0 +1,20 @@
+.ejplus-centered {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    pointer-events: none;
+}
+
+.ejplus-in-centered {
+    pointer-events: auto;
+    background-color: rgba(100, 100, 100, 0.1);
+    padding: 20px;
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

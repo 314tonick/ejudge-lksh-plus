@@ -1,7 +1,7 @@
 {
     "name": "Ejudge Lksh +",
     "description": "Makes ejudge.lksh.ru, inf-open.ru/ej/ better.",
-    "version": "1.4.3",
+    "version": "1.5",
     "manifest_version": 3,
     "author": "314tonick",
     "icons": {
@@ -46,6 +46,7 @@
                 "https://ejudge-f.d.lksh.ru/*",
                 "https://inf-open.ru/ej/*"
             ],
+            "css": ["base.css"],
             "js": ["ejudge_page.js"],
             "run_at": "document_end"
         }
@@ -56,7 +57,7 @@
         "https://inf-open.ru/ej/*"
     ],
     "web_accessible_resources": [{
-    "resources": ["icons/*.png"],
+    "resources": ["icons/*", "sfx/*"],
     "matches": ["<all_urls>"]
     }]
 }

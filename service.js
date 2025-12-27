@@ -5,7 +5,8 @@ const FIELDS = {
     default_colors: false,
     autorefresh: true,
     autorefresh_time: 200,
-    show_cheaters: false
+    show_cheaters: false,
+    look_for_testing: true
 };
 
 chrome.runtime.onMessage.addListener(
@@ -26,6 +27,17 @@ chrome.runtime.onMessage.addListener(
                 } catch (e) {
                     return false;
                 }
+            
+            case "set_for_tab":
+                chrome.storage.session.set({[String(sender.tab.id)]: request.data});
+                return true;
+
+            case "get_for_tab":
+                const key = String(sender.tab.id);
+                chrome.storage.session.get({[String(sender.tab.id)]: {}}).then(result => {
+                  sendResponse(result[key]);
+                });;
+                return true;
 
             default:
                 throw new Error("Unknown action: " + request.action);

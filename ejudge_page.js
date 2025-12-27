@@ -29,6 +29,13 @@ function applyForAll(elems, func) {
     }
 }
 
+function get_or_execute(func_or_val, val) {
+    if (func_or_val instanceof Function) {
+        return func_or_val(val);
+    }
+    return func_or_val;
+}
+
 async function makeEjudgePageBetter() {
     const storedData = await chrome.runtime.sendMessage({action: "get"});
     console.log(storedData);
@@ -37,6 +44,137 @@ async function makeEjudgePageBetter() {
     var DEFAULT_COLORS = storedData.default_colors;
     var AUTOREFRESH = storedData.autorefresh;
     var AUTOREFRESH_TIME = storedData.autorefresh_time;
+    var LOOK_FOR_TESTING = storedData.look_for_testing;
+
+    if (LOOK_FOR_TESTING) {
+        const tabdata = await chrome.runtime.sendMessage({action: "get_for_tab"});
+        const untested_prev = tabdata != undefined && tabdata.untested != undefined ? tabdata.untested : [];
+        var untested_new = [];
+        const RUNNING_VERDICTS = ["Компилируется...", "Выполняется...", "Compiling...", "Running..."];
+        const VERD_NAMES = {
+            "OK": "OK",
+            "Ошибка выполнения": "RE",
+            "Неправильный ответ": "WA",
+            "Превышено максимальное время работы": "TL",
+            "Ошибка компиляции": "CE",
+            "Нарушение правил оформления программ": "SV",
+            "Ожидает подтверждения": "OK",
+            "Неполное решение": "PS",
+            "Неполное решение 0 баллов": "PS0"
+        };
+        const VERD_DATA = {
+            "OK": {"color": "#2c2", "more_info": false, "desc": "GG"},
+            "WA": {"color": "#c33", "more_info": true, "desc": "Неправильный ответ."},
+            "TL": {"color": "#858", "more_info": true, "desc": "Превышено время исполнения."},
+            "RE": {"color": "#911", "more_info": true, "desc": "Ошибка исполнения."},
+            "PS": {"color": (score)=>{
+                if (score <= 10) {
+                    return "#b33";
+                } else if (score <= 20) {
+                    return "#a54";
+                } else if (score <= 30) {
+                    return "#a74";
+                } else if (score <= 40) {
+                    return "#a84";
+                } else if (score <= 50) {
+                    return "#aa5";
+                } else if (score <= 60) {
+                    return "#8a5";
+                } else if (score <= 70) {
+                    return "#6a5";
+                } else if (score <= 80) {
+                    return "#4a4";
+                } else if (score <= 90) {
+                    return "#3b3";
+                } else {
+                    return "#2c2";
+                }
+            }, "more_info": true, "desc": "Частичное решение."},
+            "CE": {"color": "#f33", "more_info": false, "desc": "Ошибка компиляции."},
+            "SV": {"color": "#f33", "more_info": false, "desc": "Код-стайла не существует."},
+            "PS0": {"color": "#c33", "more_info": false, "desc": "0 баллов. Skill Issue"},
+            "??": {"color": "#eee", "more_info": true, "desc": "Неизвестный вердикт. Обратитесь к создателю расширения."}
+        };
+        var to_inform = [];
+        for (var tbl of document.getElementsByClassName("table")) {
+            var olymp_mode = false;
+            if (tbl.childElementCount == 0) continue;
+            tbl = tbl.children[0];
+            if (tbl.tagName != "TBODY") continue;
+            for (var row of tbl.children) {
+                if (row.childElementCount < 7) continue;
+                if (row.children[0].tagName == "TH") {
+                    if (row.children[7].textContent == "Баллы" || row.children[7].textContent == "Score") {
+                        olymp_mode = true;
+                    }
+                    continue;
+                }
+                var verd = row.children[5].textContent;
+                var runid = row.children[0].textContent;
+                var testnum = row.children[6].textContent;
+                var score = row.children[7].textContent;
+                if (RUNNING_VERDICTS.includes(verd)) {
+                    untested_new.push(runid);
+                } else if (untested_prev.includes(runid)) {
+                    if (verd == "Неполное решение" && score == "0") {
+                        verd = "Неполное решение 0 баллов";
+                    }
+                    to_inform.push({id: runid, verd: VERD_NAMES[verd] == undefined ? "??" : VERD_NAMES[verd], test: testnum, score: score});
+                }
+            }
+            // <div style="position:fixed;top:0;left:0;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;color:green;z-index:9999;font-size:50px">VERY BIG TEXT</div>
+        }
+        chrome.runtime.sendMessage({action: "set_for_tab", data: {untested: untested_new}});
+        // to_inform.push({id:179,verd:"PS",score:78});
+        // to_inform.push({id:228,verd:"PS",score:13});
+        // to_inform.push({id:444,verd:"PS0",score:0});
+        if (to_inform.length > 0) {
+            var centered = document.createElement("div");
+            centered.classList.add("ejplus-centered");
+            var incentered = document.createElement("div");
+            incentered.classList.add("ejplus-in-centered");
+            olymp_mode = true;
+            for (var att of to_inform) {
+                var par = document.createElement("div");
+                par.style.color = get_or_execute(VERD_DATA[att.verd].color, (olymp_mode ? att.score : att.test));
+                var bignd = document.createElement("p");
+                bignd.textContent = att.verd + (VERD_DATA[att.verd].more_info ? (olymp_mode ? " " + att.score + " баллов" : " " + att.test) : "");
+                bignd.style.fontSize = "60px";
+                bignd.style.fontWeight = "bold";
+                var midnd1 = document.createElement("p");
+                midnd1.textContent = "Посылка №" + att.id + " протестировалась.";
+                midnd1.style.fontSize = "20px";
+                var midnd2 = document.createElement("p");
+                midnd2.textContent = VERD_DATA[att.verd].desc;
+                midnd2.style.fontSize = "37px";
+                var clickescnode = document.createElement("p");
+                clickescnode.textContent = "Нажмите ESC, чтобы закрыть."
+                clickescnode.style.fontStyle = "10px";
+                par.appendChild(bignd);
+                par.appendChild(midnd1);
+                par.appendChild(midnd2);
+                par.appendChild(clickescnode);
+                // var sfxnd = document.createElement("audio");
+                // sfxnd.src = chrome.runtime.getURL("sfx/metal-pipe.mp3");
+                // sfxnd.muted = false;
+                // sfxnd.volume = 0.8;
+                // par.appendChild(sfxnd);
+                // sfxnd.play();
+
+                incentered.appendChild(par);
+            }
+            setTimeout(()=>{centered.remove()}, 3000);
+            document.addEventListener("keydown", (event) => {
+                if (event.key == "Escape") {
+                    centered.remove();
+                }
+            });
+            
+            centered.appendChild(incentered);
+            document.body.appendChild(centered);
+        }
+    }
+
     console.log("Ejudge!");
     
     if (!DEFAULT_COLORS) {
@@ -93,13 +231,9 @@ async function makeEjudgePageBetter() {
             elem.parentElement.insertAdjacentElement("beforeBegin", new_button);
         }
     }
-
-    console.log(document.URL);
     
     if (document.URL.includes("action=37")) {
-        console.log("i am here");
         var tbls = document.getElementsByClassName("table");
-        console.log(tbls);
         for (var tbl of tbls) {
             tbl = tbl.children[0];
             var res = 0, test = -1;
