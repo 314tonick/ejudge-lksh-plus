@@ -108,10 +108,10 @@ td:hover > .parenthover {
     tbl.classList.add("modifiedByEjudgeStandings+");
     if (!DEFAULT_COLORS) {
         tbl.style.color = "#fff";
-        tbl.style.background = "#444";
+        tbl.style.background = "#222";
     }
     var styles = {
-        "NO": {"background": "#444", "color": "#444"},
+        "NO": {"background": "#222", "color": "#222"},
         "OK": {"background": "#251", "color": "#111"},
         "PR": {"background": "#572", "color": "#111"},
         "WA": {"background": "#833", "color": "#111"},
@@ -121,6 +121,7 @@ td:hover > .parenthover {
         "RJ": {"background": "#267", "color": "#111"},
         "IG": {"background": "#267", "color": "#111"},
         "DQ": {"background": "#111", "color": "#111"},
+        "CE": {"background": "#846", "color": "#111"},
         "CF": {"background": "#415", "color": "#111"}
     }
     var okVerdicts = ["OK"];
@@ -383,7 +384,7 @@ td:hover > .parenthover {
     for (tbl2 of document.getElementsByClassName("subm_list")) {
         if (!DEFAULT_COLORS) {
             tbl2.style.color = "#fff";
-            tbl2.style.background = "#444";
+            tbl2.style.background = "#222";
         }
         tbl2 = tbl2.children[0];
         for (row of tbl2.children) {
