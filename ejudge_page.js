@@ -128,17 +128,18 @@ async function makeEjudgePageBetter() {
         // to_inform.push({id:179,verd:"PS",score:78});
         // to_inform.push({id:228,verd:"PS",score:13});
         // to_inform.push({id:444,verd:"PS0",score:0});
+        console.log(olymp_mode);
         if (to_inform.length > 0) {
             var centered = document.createElement("div");
             centered.classList.add("ejplus-centered");
             var incentered = document.createElement("div");
             incentered.classList.add("ejplus-in-centered");
-            olymp_mode = true;
             for (var att of to_inform) {
+                console.log(att);
                 var par = document.createElement("div");
                 par.style.color = get_or_execute(VERD_DATA[att.verd].color, (olymp_mode ? att.score : att.test));
                 var bignd = document.createElement("p");
-                bignd.textContent = att.verd + (VERD_DATA[att.verd].more_info ? (olymp_mode ? " " + att.score + " баллов" : " " + att.test) : "");
+                bignd.textContent = att.verd + (VERD_DATA[att.verd].more_info ? (olymp_mode ? (" " + att.score + " баллов") : (" " + att.test)) : "");
                 bignd.style.fontSize = "60px";
                 bignd.style.fontWeight = "bold";
                 var midnd1 = document.createElement("p");
@@ -163,7 +164,7 @@ async function makeEjudgePageBetter() {
 
                 incentered.appendChild(par);
             }
-            setTimeout(()=>{centered.remove()}, 3000);
+            setTimeout(()=>{centered.remove()}, 10000);
             document.addEventListener("keydown", (event) => {
                 if (event.key == "Escape") {
                     centered.remove();
@@ -178,8 +179,10 @@ async function makeEjudgePageBetter() {
     console.log("Ejudge!");
     
     if (!DEFAULT_COLORS) {
-        document.getElementById("container").style["background"] = "#333";
-        document.getElementById("container").style["box-shadow"] = "none";
+        if (document.getElementById("container") != undefined) {
+            document.getElementById("container").style["background"] = "#333";
+            document.getElementById("container").style["box-shadow"] = "none";
+        }
         document.getElementById("l12-col").style["background"] = "#333";
         for (elem of document.getElementsByClassName("b1")) {
             elem.style["background"] = "#333";
@@ -197,9 +200,9 @@ async function makeEjudgePageBetter() {
     }
     if (!DEFAULT_COLORS) {
         for (elem of document.getElementsByClassName("info-table-line")) {
-            elem.style["box-shadow"] = "0px 2px 12px 5px #555";
+            elem.style["box-shadow"] = "none";
             for (elem2 of getChildrenLeafsList(elem)) {
-                elem2.style["background"] = "#333";
+                elem2.style["background"] = "#222";
                 elem2.style["color"] = "#fff";
             }
         }

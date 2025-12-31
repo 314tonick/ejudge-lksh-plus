@@ -1,7 +1,7 @@
 {
     "name": "Ejudge Lksh +",
     "description": "Makes ejudge.lksh.ru, inf-open.ru/ej/ better.",
-    "version": "1.5",
+    "version": "1.5.1",
     "manifest_version": 3,
     "author": "314tonick",
     "icons": {

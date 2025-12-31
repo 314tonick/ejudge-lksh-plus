@@ -6,8 +6,7 @@ const autorefresh_checkbox = document.getElementById("autorefresh_checkbox");
 const show_cheaters_checkbox = document.getElementById("show_cheaters");
 const look_for_testing_checkbox = document.getElementById("look_for_testing");
 
-console.log(pr_is_ok_checkbox);
-console.log(fire_in_the_hole_checkbox);
+console.log(look_for_testing_checkbox);
 
 chrome.runtime
     .sendMessage({action: "get"})
@@ -18,7 +17,7 @@ chrome.runtime
         autorefresh_checkbox.checked = response.autorefresh;
         autorefresh_time_input.value = response.autorefresh_time;
         show_cheaters_checkbox.value = response.show_cheaters;
-        look_for_testing_checkbox.value = response.look_for_testing;
+        look_for_testing_checkbox.checked = response.look_for_testing;
     },
 );
 
